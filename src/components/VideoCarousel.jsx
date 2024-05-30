@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { hightlightsSlides } from '../constants'
 import { pauseImg, playImg, replayImg } from '../utils';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 const VideoCarousel = () => {
+
     const videoRef = useRef([]);
     const videoSpanRef = useRef([]);
     const videoDivRef = useRef([]);
@@ -38,7 +41,7 @@ const VideoCarousel = () => {
     useEffect(() =>{
         if(loadedData.length > 3){
             if(!isPlaying){
-                videoRef.current[videoId.pause()];
+                videoRef.current[videoId].pause();
             } else{
                 startPlay && videoRef.current[videoId].play();
             }
@@ -87,7 +90,7 @@ const VideoCarousel = () => {
         }
     }
 
-    // const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
+    const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
   return (
     <>
     <div className="flex items-center">
@@ -102,7 +105,7 @@ const VideoCarousel = () => {
                                 ...pre, isPlaying: true
                             }))
                         }}
-                        // onLoadedMetadata={(e) =>handleLoadedMetaData(i, e)}
+                        onLoadedMetadata={(e) =>handleLoadedMetaData(i, e)}
                         ></video>
                     </div>
                     <div className="absolute top-12 left-[5%] z-10">
